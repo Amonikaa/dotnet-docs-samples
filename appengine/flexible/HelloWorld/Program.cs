@@ -31,11 +31,16 @@ namespace HelloWorld
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
+            var config = new ConfigurationBuilder().AddEnvironmentVariables("").Build();
+// 2nd line added
+
+            var url = config["ASPNETCORE_URLS"] ?? "http://127.0.0.1:8080";
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls(url) // 4th line added
                 .Build();
     }
 }
